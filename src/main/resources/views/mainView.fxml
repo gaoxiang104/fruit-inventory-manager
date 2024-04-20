@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import java.net.URL?>
+<?import javafx.scene.control.TreeView?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="pres.xgo.fim.controller.MainViewController"
@@ -12,14 +13,12 @@
 
     <left>
         <VBox prefWidth="300" styleClass="leftVBox">
-            <Label text="left"></Label>
+            <TreeView prefHeight="1000" fx:id="menuTree" onMouseClicked="#handleTreeViewClick"> </TreeView>
         </VBox>
     </left>
 
     <center>
-        <VBox>
-            <Label text="center"></Label>
-        </VBox>
+        <fx:include source="defaultCenterView.fxml"/>
     </center>
 
 

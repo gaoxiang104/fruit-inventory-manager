@@ -3,10 +3,10 @@ package pres.xgo.fim;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +19,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
+        // 初始化 Spring 容器并加载配置文件
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("applicationContext.xml");
 
         URL resource = getClass().getResource("/views/mainView.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(resource);
