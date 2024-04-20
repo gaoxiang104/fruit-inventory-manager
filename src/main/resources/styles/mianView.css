@@ -1,3 +1,6 @@
 .leftVBox {
     -fx-background-color: #CCCCCC;
+    -fx-border-style: solid inside;
+    -fx-border-color: linear-gradient(to right, #333, #D0E9F4, #333);
+    -fx-border-width: 0 8 0 0;
 }
