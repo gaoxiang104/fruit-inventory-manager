@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="pres.xgo.fim.mapper.ProductMapper">
+
+    <resultMap id="ProductResultMap" type="pres.xgo.fim.po.ProductPo">
+        <id property="id" column="ID"/>
+        <result property="category" column="CATEGORY"/>
+        <result property="productName" column="PRODUCT_NAME"/>
+        <result property="productCode" column="PRODUCT_CODE"/>
+        <result property="deliveryPrice" column="DELIVERY_PRICE"/>
+        <result property="maxRetailPrice" column="MAX_RETAIL_PRICE"/>
+        <result property="maxRetailPricePerKilo" column="MAX_RETAIL_PRICE_PER_KILO"/>
+        <result property="memberPriceDifference" column="MEMBER_PRICE_DIFFERENCE"/>
+        <result property="grossProfitMargin" column="GROSS_PROFIT_MARGIN"/>
+        <result property="qualityDescription" column="QUALITY_DESCRIPTION"/>
+        <result property="origin" column="ORIGIN"/>
+    </resultMap>
+
+    <insert id="insertProduct">
+        INSERT INTO PRODUCT (CATEGORY, PRODUCT_NAME, PRODUCT_CODE, DELIVERY_PRICE, MAX_RETAIL_PRICE,
+        MAX_RETAIL_PRICE_PER_KILO,
+        MEMBER_PRICE_DIFFERENCE, GROSS_PROFIT_MARGIN, QUALITY_DESCRIPTION, ORIGIN)
+        VALUES (#{category}, #{productName}, #{productCode}, #{deliveryPrice}, #{maxRetailPrice},
+        #{maxRetailPricePerKilo}, #{memberPriceDifference}, #{grossProfitMargin}, #{qualityDescription}, #{origin})
+    </insert>
+    <select id="queryAll" resultMap="ProductResultMap">
+        SELECT * FROM PRODUCT;
+    </select>
+
+</mapper>

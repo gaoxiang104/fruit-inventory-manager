@@ -1,16 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      fx:id="fruitInfoVBox"
       fx:controller="pres.xgo.fim.controller.FruitInfoController"
-    alignment="CENTER"
+      alignment="BASELINE_CENTER"
+      styleClass="centerVBox"
 >
+    <!--  标题  -->
+    <HBox alignment="CENTER_LEFT">
+        <Label styleClass="vTitle" text="果品信息">
+            <graphic>
+                <ImageView fitHeight="24" fitWidth="24">
+                    <image>
+                        <Image url="@../images/icon/arrow_rigth.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Label>
+    </HBox>
 
+    <HBox prefHeight="15">
+        <!-- 空白占位行 -->
+    </HBox>
 
-    <Label styleClass="dcLabel" text="果品信息"></Label>
+    <FlowPane styleClass="formBox" hgap="15" vgap="15">
+        <HBox alignment="CENTER_LEFT">
+            <Label text="商品代码: "/>
+            <TextField/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT">
+            <Label text="商品名称: "/>
+            <TextField/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT">
+            <Label text="商品分类: "/>
+            <TextField/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT">
+            <Button text="搜索"/>
+        </HBox>
+        <HBox alignment="CENTER_LEFT">
+            <Button text="重置"/>
+        </HBox>
+
+        <HBox styleClass="spacerColumn" prefHeight="15" prefWidth="1">
+
+        </HBox>
+        <HBox alignment="CENTER_LEFT">
+            <Button text="数据导入" fx:id="importBtn" onAction="#chooseFile" >
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16">
+                        <image>
+                            <Image url="@../images/icon/import_file.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </FlowPane>
+
+    <HBox prefHeight="15">
+        <!-- 空白占位行 -->
+    </HBox>
+    <HBox>
+        <Label text="占位行"></Label>
+    </HBox>
 
     <stylesheets>
         <URL value="@../styles/mianView.css"/>

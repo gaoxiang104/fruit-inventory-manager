@@ -16,13 +16,47 @@
 }
 
 #menuTree .tree-cell:selected {
-              -fx-background-color: #336699; /* 设置选中项的背景颜色 */
-              -fx-text-fill: white; /* 设置选中项的文本颜色 */
-          }
+    -fx-background-color: #336699; /* 设置选中项的背景颜色 */
+    -fx-text-fill: white; /* 设置选中项的文本颜色 */
+}
 
 .dcLabel {
     -fx-font-size: 48px;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold; /* 设置字体加粗 */
     -fx-font-style: italic; /* 设置字体斜体 */
+}
+
+.centerVBox {
+    -fx-background-color: #FFF;
+    -fx-padding: 15px;
+    -fx-font-family: "Consolas";
+}
+
+.vTitle {
+    -float-color: #333;
+    -fx-font-size: 18px;
+    -fx-font-family: "Consolas";
+}
+
+.formBox {
+    -fx-padding: 15px;
+    -fx-background-color: #E2E6EC;
+}
+
+/*粗体*/
+.bold{
+    -fx-font-weight: bold; /* 设置字体加粗 */
+}
+
+/*斜体*/
+.italic{
+    -fx-font-style: italic; /* 设置字体斜体 */
+}
+
+/*间隔列*/
+.spacerColumn {
+    -fx-border-style: solid inside;
+    -fx-border-color: #333;
+    -fx-border-width: 0 1 0 0;
 }
