@@ -32,21 +32,21 @@
     <FlowPane styleClass="formBox" hgap="15" vgap="15">
         <HBox alignment="CENTER_LEFT">
             <Label text="商品代码: "/>
-            <TextField/>
+            <TextField fx:id="productCodeTf"/>
         </HBox>
         <HBox alignment="CENTER_LEFT">
             <Label text="商品名称: "/>
-            <TextField/>
+            <TextField fx:id="productNameTf"/>
         </HBox>
         <HBox alignment="CENTER_LEFT">
             <Label text="商品分类: "/>
-            <TextField/>
+            <TextField fx:id="categoryTf"/>
         </HBox>
         <HBox alignment="CENTER_LEFT">
-            <Button text="搜索"/>
+            <Button fx:id="searchBtn" text="搜索" onAction="#handleSearch"/>
         </HBox>
         <HBox alignment="CENTER_LEFT">
-            <Button text="重置"/>
+            <Button fx:id="resetBtn" text="重置" onAction="#handleReset"/>
         </HBox>
 
         <HBox styleClass="spacerColumn" prefHeight="15" prefWidth="1">
@@ -68,8 +68,21 @@
     <HBox prefHeight="15">
         <!-- 空白占位行 -->
     </HBox>
-    <HBox>
-        <Label text="占位行"></Label>
+    <HBox >
+        <TableView fx:id="productTable"/>
+    </HBox>
+    <HBox prefHeight="15">
+        <!-- 空白占位行 -->
+    </HBox>
+    <HBox alignment="CENTER" spacing="15" styleClass="paginationBox" >
+        <Button fx:id="prePageBtn" text="上一页" onAction="#handlePrePage"/>
+        <HBox alignment="CENTER" prefHeight="30">
+            <Label fx:id="curPageLb" />
+            <Label text="页 / 共" />
+            <Label fx:id="pageCountLb" />
+            <Label text="页" />
+        </HBox>
+        <Button fx:id="nextPageBtn" text="下一页" onAction="#handleNextPageBtn"/>
     </HBox>
 
     <stylesheets>

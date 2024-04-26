@@ -15,17 +15,52 @@
         <result property="grossProfitMargin" column="GROSS_PROFIT_MARGIN"/>
         <result property="qualityDescription" column="QUALITY_DESCRIPTION"/>
         <result property="origin" column="ORIGIN"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
     </resultMap>
 
     <insert id="insertProduct">
         INSERT INTO PRODUCT (CATEGORY, PRODUCT_NAME, PRODUCT_CODE, DELIVERY_PRICE, MAX_RETAIL_PRICE,
         MAX_RETAIL_PRICE_PER_KILO,
-        MEMBER_PRICE_DIFFERENCE, GROSS_PROFIT_MARGIN, QUALITY_DESCRIPTION, ORIGIN)
+        MEMBER_PRICE_DIFFERENCE, GROSS_PROFIT_MARGIN, QUALITY_DESCRIPTION, ORIGIN, CREATE_TIME)
         VALUES (#{category}, #{productName}, #{productCode}, #{deliveryPrice}, #{maxRetailPrice},
-        #{maxRetailPricePerKilo}, #{memberPriceDifference}, #{grossProfitMargin}, #{qualityDescription}, #{origin})
+        #{maxRetailPricePerKilo}, #{memberPriceDifference}, #{grossProfitMargin}, #{qualityDescription},
+        #{origin}, now())
     </insert>
+    <update id="updateProduct">
+        UPDATE PRODUCT
+        <set>
+            <if test="category != null">CATEGORY = #{category},</if>
+            <if test="productName != null">PRODUCT_NAME = #{productName},</if>
+            <if test="deliveryPrice != null">DELIVERY_PRICE = #{deliveryPrice},</if>
+            <if test="maxRetailPrice != null">MAX_RETAIL_PRICE = #{maxRetailPrice},</if>
+            <if test="maxRetailPricePerKilo != null">MAX_RETAIL_PRICE_PER_KILO = #{maxRetailPricePerKilo},</if>
+            <if test="memberPriceDifference != null">MEMBER_PRICE_DIFFERENCE = #{memberPriceDifference},</if>
+            <if test="grossProfitMargin != null">GROSS_PROFIT_MARGIN = #{grossProfitMargin},</if>
+            <if test="qualityDescription != null">QUALITY_DESCRIPTION = #{qualityDescription},</if>
+            <if test="origin != null">ORIGIN = #{origin},</if>
+            UPDATE_TIME = now()
+        </set>
+        WHERE PRODUCT_CODE = #{productCode}
+    </update>
     <select id="queryAll" resultMap="ProductResultMap">
         SELECT * FROM PRODUCT;
+    </select>
+    <select id="countByProductCode" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM PRODUCT WHERE PRODUCT_CODE = #{productCode};
+    </select>
+    <select id="queryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM PRODUCT
+        WHERE CATEGORY LIKE CONCAT('%', #{category}, '%')
+        AND PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        AND PRODUCT_CODE LIKE CONCAT('%', #{productCode}, '%')
+    </select>
+    <select id="queryBySerchDto" resultMap="ProductResultMap">
+        SELECT * FROM PRODUCT
+        WHERE CATEGORY LIKE CONCAT('%', #{category}, '%')
+        AND PRODUCT_NAME LIKE CONCAT('%', #{productName}, '%')
+        AND PRODUCT_CODE LIKE CONCAT('%', #{productCode}, '%')
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
 </mapper>

@@ -60,3 +60,8 @@
     -fx-border-color: #333;
     -fx-border-width: 0 1 0 0;
 }
+
+/*设置分页控件显示文字的大小*/
+.paginationBox {
+    -fx-font-size: 16px; /* 设置按钮文字大小 */
+}

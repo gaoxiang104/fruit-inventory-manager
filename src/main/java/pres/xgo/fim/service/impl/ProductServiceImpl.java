@@ -8,6 +8,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pres.xgo.fim.dto.Pageable;
+import pres.xgo.fim.dto.ProductSearchDto;
 import pres.xgo.fim.error.FimException;
 import pres.xgo.fim.mapper.ProductMapper;
 import pres.xgo.fim.po.ProductPo;
@@ -31,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper mapper;
 
     @Override
+    @Transactional
     public Integer importProduct(String filePath) {
 
         if (StringUtils.isEmpty(filePath)) {
@@ -40,9 +44,19 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductPo> productPos = parseExcel(filePath);
 
-        return productPos.size();
+        int result = 0;
+        for (ProductPo po : productPos) {
+            result += saveProduct(po);
+        }
+        return result;
     }
 
+    /**
+     * 解析Excel
+     *
+     * @param filePath
+     * @return
+     */
     private List<ProductPo> parseExcel(String filePath) {
         List<ProductPo> result = null;
         try {
@@ -64,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
                 String category = ExcelUtils.getCellValue(row.getCell(2)); // 商品分类
                 String productName = ExcelUtils.getCellValue(row.getCell(3)); // 商品名称
                 String productCode = ExcelUtils.getCellValue(row.getCell(4)); // 商品代码
-                if(StringUtils.isEmpty(productCode)){
+                if (StringUtils.isEmpty(productCode)) {
                     continue;
                 }
                 String deliveryPriceStr = ExcelUtils.getCellValue(row.getCell(5)); // 配送价
@@ -100,6 +114,8 @@ public class ProductServiceImpl implements ProductService {
 
             log.debug("result : {}", result);
 
+            workbook.close();
+
             return result;
         } catch (IOException e) {
             log.error("parseExcel error : {}", e);
@@ -107,9 +123,39 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * 保存 商品；如果商品ID存在，则更新商品。如果商品ID不存在，则新增商品；
+     *
+     * @param po
+     * @return
+     */
+    private Integer saveProduct(ProductPo po) {
+        Integer count = mapper.countByProductCode(po.getProductCode());
+        if (0 == count) {
+            return mapper.insertProduct(po);
+        } else {
+            return mapper.updateProduct(po);
+        }
+    }
+
     @Override
-    public void allList() {
+    public List<ProductPo> allList() {
         List<ProductPo> productPos = mapper.queryAll();
         log.info("productPos : {}", productPos);
+        return productPos;
+    }
+
+    @Override
+    public Pageable<ProductPo> queryBySerchDto(ProductSearchDto dto) {
+        Integer count = mapper.queryCount(dto);
+        List<ProductPo> productPos = mapper.queryBySerchDto(dto);
+
+        Pageable<ProductPo> pageable =
+                new Pageable<>(dto.getCurrentPage()
+                        , dto.getPageSize()
+                        , count,
+                        productPos);
+
+        return pageable;
     }
 }

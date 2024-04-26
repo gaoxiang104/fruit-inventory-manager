@@ -3,6 +3,7 @@ package pres.xgo.fim.po;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 public class ProductPo {
@@ -38,4 +39,8 @@ public class ProductPo {
 
     // 产地
     private String origin;
+    // 创建时间
+    private Date createTime;
+    // 修改时间
+    private Date updateTime;
 }
